@@ -51,6 +51,6 @@ metrics:
   jmx:
     enabled: true
   serviceMonitor:
-    enabled: true
+    enabled: false
     interval: "10s"
     scrapeTimeout: "10s"

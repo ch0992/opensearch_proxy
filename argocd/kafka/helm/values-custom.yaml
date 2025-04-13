@@ -1,0 +1,47 @@
+# Docker Desktop 환경에 최적화된 Kafka 설정
+global:
+  storageClass: "hostpath"
+
+kraft:
+  enabled: true
+  clusterId: "LpwzZO1SS6OGW3iZxeJ6jg"
+
+controller:
+  replicaCount: 1
+  heapOpts: "-Xmx512m -Xms512m"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1Gi
+    requests:
+      cpu: 250m
+      memory: 512Mi
+  persistence:
+    size: 1Gi
+
+broker:
+  replicaCount: 2
+  heapOpts: "-Xmx512m -Xms512m"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1Gi
+    requests:
+      cpu: 250m
+      memory: 512Mi
+  persistence:
+    size: 1Gi
+
+metrics:
+  kafka:
+    enabled: true
+  serviceMonitor:
+    enabled: true
+    interval: "10s"
+    scrapeTimeout: "10s"
+
+service:
+  type: ClusterIP
+
+externalAccess:
+  enabled: false

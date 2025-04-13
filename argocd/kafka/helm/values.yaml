@@ -1,0 +1,101 @@
+## Global Docker image parameters
+## Please, note that this will override the image parameters, including dependencies, configured to use the global value
+##
+global:
+  storageClass: "hostpath"
+
+## @section Kafka parameters
+##
+kraft:
+  enabled: true
+  clusterId: "LpwzZO1SS6OGW3iZxeJ6jg"
+
+## @section Controller-only statefulset parameters
+##
+controller:
+  replicaCount: 1
+  heapOpts: "-Xmx512m -Xms512m"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1Gi
+    requests:
+      cpu: 250m
+      memory: 512Mi
+  persistence:
+    enabled: true
+    size: 1Gi
+    storageClass: "hostpath"
+
+## @section Broker-only statefulset parameters
+##
+broker:
+  replicaCount: 2
+  heapOpts: "-Xmx512m -Xms512m"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1Gi
+    requests:
+      cpu: 250m
+      memory: 512Mi
+  persistence:
+    enabled: true
+    size: 1Gi
+    storageClass: "hostpath"
+
+## @section Service parameters
+##
+service:
+  type: ClusterIP
+
+## @section Metrics parameters
+##
+metrics:
+  kafka:
+    enabled: true
+  jmx:
+    enabled: false
+  serviceMonitor:
+    enabled: true
+    namespace: ""
+    interval: "10s"
+    scrapeTimeout: "10s"
+
+## @section External access parameters
+##
+externalAccess:
+  enabled: false
+
+## @section Pod Security Context parameters
+##
+podSecurityContext:
+  enabled: true
+  fsGroup: 1001
+  runAsUser: 1001
+
+## @section Container Security Context parameters
+##
+containerSecurityContext:
+  enabled: true
+  runAsUser: 1001
+  runAsNonRoot: true
+  allowPrivilegeEscalation: false
+
+## @section Readiness probe parameters
+##
+readinessProbe:
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+  successThreshold: 1
+
+## @section Liveness probe parameters
+##
+livenessProbe:
+  initialDelaySeconds: 60
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+  successThreshold: 1

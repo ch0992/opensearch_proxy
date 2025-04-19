@@ -33,6 +33,9 @@ externalAccess:
         metallb.universe.tf/address-pool: first-pool
       ports:
         external: 9092
+      # MetalLB IP 지정
+      loadBalancerIPs:
+        - "172.19.255.201"
 
 # 메트릭 비활성화
 metrics:

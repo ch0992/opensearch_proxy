@@ -2,7 +2,7 @@ global:
   storageClass: "standard"
 
 controller:
-  replicaCount: 1  # 개발 환경이므로 1개로 축소
+  replicaCount: 1
   resources:
     requests:
       cpu: 200m
@@ -10,13 +10,13 @@ controller:
     limits:
       cpu: 500m
       memory: 1Gi
-  heapOpts: "-Xms256m -Xmx512m"  # 힙 메모리 설정
+  heapOpts: "-Xms256m -Xmx512m"
   persistence:
     enabled: true
     size: 1Gi
 
 broker:
-  replicaCount: 0  # broker-only 노드는 불필요
+  replicaCount: 0 # broker-only 노드는 불필요
 
 listeners:
   client:
@@ -24,17 +24,16 @@ listeners:
     containerPort: 9092
     protocol: PLAINTEXT
 
-# 외부 접근 비활성화
 externalAccess:
-  enabled: false
+  enabled: true
+  controller:
+    service:
+      type: LoadBalancer
+      loadBalancerIPs:
+      - 172.18.255.201 # MetalLB에서 설정한 IP 범위 내에서 1개 사용
+      annotations:
+        metallb.universe.tf/address-pool: first-pool
 
-# 서비스 설정
-service:
-  type: LoadBalancer
-  annotations:
-    metallb.universe.tf/address-pool: first-pool
-
-# 메트릭 비활성화
 metrics:
   kafka:
     enabled: false

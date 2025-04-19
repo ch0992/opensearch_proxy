@@ -36,9 +36,11 @@ listeners:
     name: PLAINTEXT
     containerPort: 9092
     protocol: PLAINTEXT
-    advertisedListeners:
-      - type: containerIP
-        overrideValue: localhost
+  external:
+    enabled: true
+    containerPort: 9092
+    protocol: PLAINTEXT
+    advertisedHostName: localhost
 
 externalAccess:
   enabled: true

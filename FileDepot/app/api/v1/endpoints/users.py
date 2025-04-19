@@ -3,7 +3,7 @@ endpoints/users.py
 - User 도메인 CRUD FastAPI 엔드포인트
 """
 
-from fastapi import APIRouter, HTTPException, Path
+from fastapi import APIRouter, HTTPException, Path, Form
 from typing import List
 from app.schemas.user import UserCreateRequest, UserUpdateRequest
 from app.domain.user.models import User
@@ -18,7 +18,13 @@ router = APIRouter()
     summary="사용자 생성",
     description="새로운 사용자 등록 예제 API"
 )
-def create(request: UserCreateRequest):
+def create(
+    username: str = Form(..., description="사용자 계정 아이디 (예: admin)"),
+    email: str = Form(..., description="사용자 이메일 (예: test@example.com)"),
+    full_name: str = Form(..., description="사용자 이름 (예: 홍길동)"),
+    password: str = Form(..., description="사용자 비밀번호 (예: admin)"),
+    disabled: bool = Form(False, description="비활성화 여부 (예: false)")
+):
     """
     새로운 사용자 등록 예제 API
     ---
@@ -70,8 +76,12 @@ def read(user_id: int):
     description="사용자 정보 수정 예제 API"
 )
 def update(
-    request: UserUpdateRequest,
-    user_id: int = Path(..., description="수정할 사용자 고유 ID (예: 1)")
+    user_id: int = Path(..., description="수정할 사용자 고유 ID (예: 1)"),
+    username: str = Form(..., description="사용자 계정 아이디 (예: admin)"),
+    email: str = Form(..., description="사용자 이메일 (예: test@example.com)"),
+    full_name: str = Form(..., description="사용자 이름 (예: 홍길동)"),
+    password: str = Form(..., description="사용자 비밀번호 (예: admin)"),
+    disabled: bool = Form(False, description="비활성화 여부 (예: false)")
 ):
     """
     사용자 정보 수정 예제 API

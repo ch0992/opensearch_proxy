@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/ch0992/opensearch_proxy.git
     targetRevision: HEAD
-    path: Infra/argocd/filedepot/helm
+    path: origins/charts/filedepot
     helm:
       valueFiles:
       - values.yaml

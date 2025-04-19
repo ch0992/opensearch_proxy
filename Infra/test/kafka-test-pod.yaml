@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kafka-test-pod
+  namespace: kafka
+spec:
+  containers:
+  - name: kafka-test
+    image: ubuntu:22.04
+    command: ["/bin/bash", "-c"]
+    args:
+      - |
+        apt-get update && \
+        apt-get install -y kafkacat curl && \
+        tail -f /dev/null
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "100m"
+      limits:
+        memory: "128Mi"
+        cpu: "200m"

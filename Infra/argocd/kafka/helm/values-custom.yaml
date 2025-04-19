@@ -1,0 +1,44 @@
+global:
+  storageClass: "standard"
+
+controller:
+  replicaCount: 1  # 개발 환경이므로 1개로 축소
+  resources:
+    requests:
+      cpu: 200m
+      memory: 512Mi
+    limits:
+      cpu: 500m
+      memory: 1Gi
+  heapOpts: "-Xms256m -Xmx512m"  # 힙 메모리 설정
+  persistence:
+    enabled: true
+    size: 1Gi
+
+broker:
+  replicaCount: 0  # broker-only 노드는 불필요
+
+listeners:
+  client:
+    name: PLAINTEXT
+    containerPort: 9092
+    protocol: PLAINTEXT
+
+externalAccess:
+  enabled: true
+  controller:
+    service:
+      type: LoadBalancer
+      annotations:
+        metallb.universe.tf/address-pool: first-pool
+      ports:
+        external: 9092
+
+# 메트릭 비활성화
+metrics:
+  kafka:
+    enabled: false
+  jmx:
+    enabled: false
+  serviceMonitor:
+    enabled: false

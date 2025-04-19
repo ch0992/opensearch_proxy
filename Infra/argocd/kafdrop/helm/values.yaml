@@ -1,0 +1,30 @@
+replicaCount: 1
+
+image:
+  repository: obsidiandynamics/kafdrop
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: LoadBalancer
+  port: 9000
+  annotations:
+    metallb.universe.tf/address-pool: first-pool
+
+kafka:
+  brokerConnect: kafka-0.kafka-headless.kafka.svc.cluster.local:9092
+  properties: ""
+  truststore: ""
+  keystore: ""
+  propertiesFile: ""
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 200m
+    memory: 256Mi
+
+jvm:
+  opts: "-Xms256M -Xmx512M"

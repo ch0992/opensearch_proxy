@@ -2,7 +2,6 @@
 # - standard (default)
 # - hostpath
 # Both using rancher.io/local-path provisioner
-
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -12,7 +11,7 @@ spec:
   capacity:
     storage: 10Gi
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   storageClassName: standard
   hostPath:
@@ -27,7 +26,7 @@ spec:
   capacity:
     storage: 10Gi
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   storageClassName: standard
   hostPath:

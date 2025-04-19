@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/ch0992/gitops.git # Git 저장소 URL
+    repoURL: https://github.com/ch0992/opensearch_proxy.git # Git 저장소 URL
     targetRevision: HEAD # 최신 브랜치 사용
     path: argocd/mysql/helm # Helm Chart가 위치한 경로
     helm:

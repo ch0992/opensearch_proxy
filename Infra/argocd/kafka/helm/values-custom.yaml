@@ -24,18 +24,15 @@ listeners:
     containerPort: 9092
     protocol: PLAINTEXT
 
+# 외부 접근 비활성화
 externalAccess:
-  enabled: true
-  controller:
-    service:
-      type: LoadBalancer
-      annotations:
-        metallb.universe.tf/address-pool: first-pool
-      ports:
-        external: 9092
-      # MetalLB IP 지정
-      loadBalancerIPs:
-        - "172.19.255.201"
+  enabled: false
+
+# 서비스 설정
+service:
+  type: LoadBalancer
+  annotations:
+    metallb.universe.tf/address-pool: first-pool
 
 # 메트릭 비활성화
 metrics:

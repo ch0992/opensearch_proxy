@@ -26,7 +26,7 @@ controller:
   startupProbe:
     initialDelaySeconds: 30
     periodSeconds: 10
-    failureThreshold: 60  # 10분 동안 시도
+    failureThreshold: 60 # 10분 동안 시도
 
 broker:
   replicaCount: 0 # broker-only 노드는 불필요

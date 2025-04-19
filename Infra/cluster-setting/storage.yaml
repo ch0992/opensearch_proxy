@@ -1,0 +1,35 @@
+# Storage classes are already configured in the cluster:
+# - standard (default)
+# - hostpath
+# Both using rancher.io/local-path provisioner
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: opensearch-data-pv
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: standard
+  hostPath:
+    path: /var/lib/opensearch-data
+    type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: kafka-data-pv
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: standard
+  hostPath:
+    path: /var/lib/kafka-data
+    type: DirectoryOrCreate

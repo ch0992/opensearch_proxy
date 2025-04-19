@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/ch0992/opensearch_proxy.git
     targetRevision: HEAD
-    path: infra/argocd/kafdrop/helm
+    path: Infra/argocd/kafdrop/helm
     helm:
       valueFiles:
       - values.yaml

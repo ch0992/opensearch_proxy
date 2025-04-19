@@ -10,8 +10,9 @@ from app.connectors.minio import MinioConnector
 app = FastAPI()
 
 # MinIO 커넥터 인스턴스 (실제 환경정보로 변경 필요)
-minio = MinioConnector(endpoint="localhost:9000", access_key="minio", secret_key="minio123")
-BUCKET = "mybucket"
+from app.core.config import settings
+minio = MinioConnector(endpoint=settings.MINIO_ENDPOINT, access_key=settings.MINIO_ACCESS_KEY, secret_key=settings.MINIO_SECRET_KEY)
+BUCKET = settings.MINIO_BUCKET
 
 @app.post("/upload/")
 def upload_file(file: UploadFile = File(...)):

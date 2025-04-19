@@ -11,8 +11,9 @@ from app.connectors.minio import MinioConnector
 app = FastAPI()
 
 # 커넥터 인스턴스 생성 예시
-kafka_producer = KafkaProducer(brokers=["localhost:9092"])
-minio_client = MinioConnector(endpoint="localhost:9000", access_key="minio", secret_key="minio123")
+from app.core.config import settings
+kafka_producer = KafkaProducer(brokers=settings.KAFKA_BROKERS)
+minio_client = MinioConnector(endpoint=settings.MINIO_ENDPOINT, access_key=settings.MINIO_ACCESS_KEY, secret_key=settings.MINIO_SECRET_KEY)
 
 @app.post("/send-event")
 async def send_event(data: dict):

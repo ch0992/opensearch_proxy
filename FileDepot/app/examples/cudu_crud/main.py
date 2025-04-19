@@ -12,7 +12,8 @@ from app.connectors.cudu import CUDUConnector
 app = FastAPI()
 
 # CUDU 커넥터 인스턴스 (실제 환경정보로 변경 필요)
-cudu = CUDUConnector(endpoint="https://cudu.example.com", api_key="your_api_key")
+import os
+cudu = CUDUConnector(endpoint=os.getenv("CUDU_ENDPOINT", "https://cudu.example.com"), api_key=os.getenv("CUDU_API_KEY", "your_api_key"))
 
 # 예시 데이터 모델
 class Item(BaseModel):

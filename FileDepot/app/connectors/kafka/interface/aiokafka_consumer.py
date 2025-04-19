@@ -2,9 +2,11 @@ from typing import Optional, List
 
 class AIOKafkaConsumer:
     def __init__(self, brokers: Optional[list[str]] = None, group_id: Optional[str] = None):
-        import os
+        from app.core.config import settings
         if brokers is None:
-            brokers = os.getenv("KAFKA_BROKERS", "localhost:9092").split(",")
+            brokers = settings.KAFKA_BROKERS
+        if group_id is None:
+            group_id = getattr(settings, "KAFKA_GROUP_ID", None)
         self.brokers = brokers
         self.group_id = group_id
 

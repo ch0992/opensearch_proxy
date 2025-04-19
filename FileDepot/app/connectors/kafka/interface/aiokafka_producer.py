@@ -7,12 +7,12 @@ app/connectors/kafka/interface/aiokafka_producer.py
 from typing import Optional, List
 from aiokafka import AIOKafkaProducer
 import asyncio
+from app.core.config import settings
 
 class AIOKafkaProducerWrapper:
     def __init__(self, brokers: Optional[List[str]] = None):
-        import os
         if brokers is None:
-            brokers = os.getenv("KAFKA_BROKERS", "localhost:9092").split(",")
+            brokers = settings.KAFKA_BROKERS
         self.brokers = brokers
         self._producer = None
 

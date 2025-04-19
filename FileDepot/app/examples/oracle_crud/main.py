@@ -12,7 +12,12 @@ from app.connectors.oracle import OracleConnector
 app = FastAPI()
 
 # Oracle 커넥터 인스턴스 (실제 환경정보로 변경 필요)
-oracle = OracleConnector(dsn="mydb_high", user="admin", password="password")
+import os
+oracle = OracleConnector(
+    dsn=os.getenv("ORACLE_DSN", "mydb_high"),
+    user=os.getenv("ORACLE_USER", "admin"),
+    password=os.getenv("ORACLE_PASSWORD", "password")
+)
 
 # 예시 데이터 모델
 class Item(BaseModel):

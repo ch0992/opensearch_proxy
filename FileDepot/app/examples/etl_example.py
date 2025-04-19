@@ -8,8 +8,16 @@ from app.connectors.kafka.consumer import KafkaConsumer
 from app.connectors.oracle import OracleConnector
 
 # Kafka 컨슈머와 Oracle 커넥터 인스턴스 생성 예시
-kafka_consumer = KafkaConsumer(brokers=["localhost:9092"], group_id="etl-group")
-oracle_connector = OracleConnector(dsn="mydb_high", user="admin", password="password")
+import os
+kafka_consumer = KafkaConsumer(
+    brokers=os.getenv("KAFKA_BROKERS", "localhost:9092").split(","),
+    group_id=os.getenv("KAFKA_GROUP_ID", "etl-group")
+)
+oracle_connector = OracleConnector(
+    dsn=os.getenv("ORACLE_DSN", "mydb_high"),
+    user=os.getenv("ORACLE_USER", "admin"),
+    password=os.getenv("ORACLE_PASSWORD", "password")
+)
 
 def handle_message(message):
     # 메시지를 받아 Oracle에 저장 (예시)

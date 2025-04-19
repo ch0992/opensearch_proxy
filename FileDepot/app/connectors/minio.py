@@ -6,8 +6,12 @@ app/connectors/minio.py
 
 from minio import Minio
 
+from app.core.config import settings
 class MinioConnector:
-    def __init__(self, endpoint: str, access_key: str, secret_key: str, secure: bool = True):
+    def __init__(self, endpoint: str = None, access_key: str = None, secret_key: str = None, secure: bool = True):
+        endpoint = endpoint or settings.MINIO_ENDPOINT
+        access_key = access_key or settings.MINIO_ACCESS_KEY
+        secret_key = secret_key or settings.MINIO_SECRET_KEY
         self.client = Minio(endpoint, access_key=access_key, secret_key=secret_key, secure=secure)
 
     def upload_file(self, bucket: str, file_path: str, object_name: str):

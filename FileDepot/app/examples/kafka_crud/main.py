@@ -15,8 +15,9 @@ import asyncio
 app = FastAPI()
 
 # Kafka 커넥터 인스턴스 생성 (실제 브로커 주소로 변경 필요)
-kafka_producer = KafkaProducer(brokers=["localhost:9092"])
-kafka_consumer = KafkaConsumer(brokers=["localhost:9092"], group_id="crud-group")
+import os
+kafka_producer = KafkaProducer(brokers=os.getenv("KAFKA_BROKERS", "localhost:9092").split(","))
+kafka_consumer = KafkaConsumer(brokers=os.getenv("KAFKA_BROKERS", "localhost:9092").split(","), group_id=os.getenv("KAFKA_GROUP_ID", "crud-group"))
 
 # 예시 데이터 모델
 class Item(BaseModel):

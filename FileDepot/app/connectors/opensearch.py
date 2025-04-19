@@ -2,11 +2,12 @@ from opensearchpy import OpenSearch
 from typing import Optional
 import os
 
+from app.core.config import settings
 class OpenSearchConnector:
     def __init__(self):
-        self.host = os.getenv("OPENSEARCH_HOST", "localhost")
-        self.port = int(os.getenv("OPENSEARCH_PORT", 9200))
-        self.index = os.getenv("OPENSEARCH_INDEX", "filedepot_metadata")
+        self.host = getattr(settings, "OPENSEARCH_HOST", "localhost")
+        self.port = int(getattr(settings, "OPENSEARCH_PORT", 9200))
+        self.index = getattr(settings, "OPENSEARCH_INDEX", "filedepot_metadata")
         self.client = OpenSearch(
             hosts=[{"host": self.host, "port": self.port}],
             http_compress=True,

@@ -14,8 +14,11 @@ import zipfile
 class KafkaProducer(Protocol):
     async def send(self, topic: str, message: dict): ...
 
+from app.core.config import settings
 class FastStreamKafkaProducer:
-    def __init__(self, brokers: List[str]):
+    def __init__(self, brokers: List[str] = None):
+        if brokers is None:
+            brokers = settings.KAFKA_BROKERS
         self.broker = KafkaBroker(",".join(brokers))
     async def send(self, topic: str, message: dict):
         await self.broker.publish(message, topic=topic)

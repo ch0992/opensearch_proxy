@@ -12,7 +12,7 @@ service:
     metallb.universe.tf/address-pool: first-pool
 
 kafka:
-  brokerConnect: kafka-0.kafka-headless.kafka.svc.cluster.local:9092
+  brokerConnect: kafka:9092
   properties: ""
   truststore: ""
   keystore: ""

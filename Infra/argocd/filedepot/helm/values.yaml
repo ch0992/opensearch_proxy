@@ -1,0 +1,32 @@
+replicaCount: 1
+
+image:
+  repository: filedepot/filedepot
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+
+kafka:
+  bootstrapServers: localhost:9092
+  topic: filedepot-topic
+
+resources: {}
+
+persistence:
+  enabled: false
+  size: 1Gi
+
+readinessProbe:
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 3
+
+startupProbe:
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  failureThreshold: 60

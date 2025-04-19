@@ -1,0 +1,6 @@
+apiVersion: v2
+name: filedepot
+description: A Helm chart for FileDepot service
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

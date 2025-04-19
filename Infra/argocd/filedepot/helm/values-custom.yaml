@@ -1,0 +1,41 @@
+replicaCount: 1
+
+image:
+  repository: filedepot/filedepot
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: LoadBalancer
+  port: 8080
+  annotations:
+    metallb.universe.tf/address-pool: first-pool
+  loadBalancerIP: 172.19.255.203  # MetalLB IP 범위 내에서 할당
+
+kafka:
+  bootstrapServers: kafka-controller-0.kafka-controller-headless.kafka.svc.cluster.local:9092
+  topic: filedepot-topic
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 200m
+    memory: 256Mi
+
+persistence:
+  enabled: true
+  size: 1Gi
+
+readinessProbe:
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 3
+
+startupProbe:
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  failureThreshold: 60

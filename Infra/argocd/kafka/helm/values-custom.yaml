@@ -30,7 +30,7 @@ externalAccess:
     service:
       type: LoadBalancer
       loadBalancerIPs:
-      - 172.18.255.201 # MetalLB에서 설정한 IP 범위 내에서 1개 사용
+      - 172.19.255.201 # MetalLB에서 설정한 IP 범위 내에서 1개 사용
       annotations:
         metallb.universe.tf/address-pool: first-pool
 

@@ -1,16 +1,16 @@
 replicaCount: 1
 
 image:
-  repository: filedepot/filedepot
+  repository: localhost:5001/filedepot
   tag: latest
   pullPolicy: Always
 
 service:
   type: LoadBalancer
-  port: 8080
+  port: 8000
   annotations:
     metallb.universe.tf/address-pool: first-pool
-  loadBalancerIP: 172.19.255.203  # MetalLB IP 범위 내에서 할당
+  loadBalancerIP: 172.19.255.202
 
 kafka:
   bootstrapServers: kafka-controller-0.kafka-controller-headless.kafka.svc.cluster.local:9092

@@ -272,7 +272,38 @@ email-validator==2.1.1   # 이메일 검증
    uv pip install
    ```
 
-3. 개발 서버 실행 (예시)
+3. 디버그 모드 실행
+   - VS Code에서 디버그 실행을 위해 `.vscode/launch.json` 파일이 제공됩니다.
+   - 디버그 설정:
+     ```json
+     {
+         "version": "0.2.0",
+         "configurations": [
+             {
+                 "name": "Python: FastAPI (uvicorn)",
+                 "type": "debugpy",
+                 "request": "launch",
+                 "module": "uvicorn",
+                 "args": [
+                     "app.main:app",
+                     "--reload",
+                     "--host", "0.0.0.0",
+                     "--port", "8000"
+                 ],
+                 "jinja": true,
+                 "envFile": "${workspaceFolder}/.env",
+                 "cwd": "${workspaceFolder}/FileDepot"
+             }
+         ]
+     }
+     ```
+   - 실행 방법:
+     1. VS Code에서 F5 키를 누르거나
+     2. 디버그 탭에서 "Python: FastAPI (uvicorn)" 설정을 선택하고 실행
+   - 브레이크포인트를 설정하고 코드를 한 줄씩 실행하며 디버깅이 가능합니다.
+   ```
+
+4. 개발 서버 실행 (예시)
    ```bash
    uvicorn app.main:app --reload
    ```

@@ -1,8 +1,8 @@
 replicaCount: 1
 
 image:
-  repository: filedepot
-  pullPolicy: Never
+  repository: host.docker.internal:5001/filedepot
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: latest
 

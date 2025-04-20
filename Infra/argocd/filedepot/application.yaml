@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: file:///Users/ygtoken/workspace/opensearch_proxy
+    repoURL: https://github.com/ch0992/opensearch_proxy.git
     targetRevision: HEAD
     path: Infra/argocd/filedepot/helm
     helm:

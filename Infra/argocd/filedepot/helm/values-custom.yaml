@@ -17,16 +17,16 @@ kafka:
   topic: filedepot-topic
 
 resourcenv:
-  - name: ENVIRONMENT
-    value: "dev"
-  - name: PROJECT_NAME
-    value: "filedepot"
-  - name: DATABASE_URL
-    value: "sqlite:///./test.db"
-  - name: FIRST_SUPERUSER
-    value: "admin@example.com"
-  - name: FIRST_SUPERUSER_PASSWORD
-    value: "admin123"
+- name: ENVIRONMENT
+  value: "dev"
+- name: PROJECT_NAME
+  value: "filedepot"
+- name: DATABASE_URL
+  value: "sqlite:///./test.db"
+- name: FIRST_SUPERUSER
+  value: "admin@example.com"
+- name: FIRST_SUPERUSER_PASSWORD
+  value: "admin123"
 
 resources:
   limits:

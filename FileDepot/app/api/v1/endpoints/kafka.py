@@ -15,10 +15,19 @@ from app.connectors.kafka.service.consumer.message_reader import MessageReader
 
 
 router = APIRouter()
-faststream_producer = FastStreamKafkaProducer(brokers=["localhost:9092"])
-aiokafka_producer = AIOKafkaProducerWrapper(brokers=["localhost:9092"])
-faststream_consumer = FastStreamKafkaConsumer(brokers=["localhost:9092"])
-aiokafka_consumer = AIOKafkaConsumer(brokers=["localhost:9092"])
+from app.core.config import settings
+
+def parse_brokers(val):
+    if isinstance(val, str):
+        return [b.strip() for b in val.split(",") if b.strip()]
+    return list(val)
+
+brokers = parse_brokers(getattr(settings, "KAFKA_BROKERS", "localhost:9092"))
+
+faststream_producer = FastStreamKafkaProducer(brokers=brokers)
+aiokafka_producer = AIOKafkaProducerWrapper(brokers=brokers)
+faststream_consumer = FastStreamKafkaConsumer(brokers=brokers)
+aiokafka_consumer = AIOKafkaConsumer(brokers=brokers)
 file_uploader = FileUploader(faststream_producer)
 message_reader = MessageReader(aiokafka_consumer)
 

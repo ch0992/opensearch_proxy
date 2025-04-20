@@ -3,6 +3,7 @@ global:
 
 controller:
   replicaCount: 1
+
   resources:
     requests:
       cpu: 200m
@@ -10,12 +11,13 @@ controller:
     limits:
       cpu: 500m
       memory: 1Gi
+
   heapOpts: "-Xms256m -Xmx512m"
+
   persistence:
     enabled: true
     size: 1Gi
 
-  # Probe 설정 조정
   readinessProbe:
     initialDelaySeconds: 45
     periodSeconds: 10
@@ -26,26 +28,33 @@ controller:
   startupProbe:
     initialDelaySeconds: 30
     periodSeconds: 10
-    failureThreshold: 60 # 10분 동안 시도
+    failureThreshold: 60
 
-broker:
-  replicaCount: 0 # broker-only 노드는 불필요
+  listeners:
+    client:
+      name: PLAINTEXT
+      containerPort: 9094
+      protocol: PLAINTEXT
 
-listeners:
-  client:
-    name: PLAINTEXT
-    containerPort: 9092
-    protocol: PLAINTEXT
-
-externalAccess:
-  enabled: true
-  controller:
+  externalAccess:
+    enabled: true
     service:
       type: LoadBalancer
       loadBalancerIPs:
-      - 172.19.255.201 # MetalLB에서 설정한 IP 범위 내에서 1개 사용
-      annotations:
-        metallb.universe.tf/address-pool: first-pool
+      - 127.0.0.1 # 또는 kind 클러스터가 바인딩된 Docker 호스트 IP
+      autoDiscovery:
+        enabled: false
+    external:
+      advertisedListeners:
+      - PLAINTEXT://localhost:9094
+
+  configurationOverrides:
+    "listeners": PLAINTEXT://:9094
+    "advertised.listeners": PLAINTEXT://localhost:9094
+    "listener.security.protocol.map": PLAINTEXT:PLAINTEXT
+
+broker:
+  replicaCount: 0
 
 metrics:
   kafka:

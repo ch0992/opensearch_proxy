@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: localhost:5001/filedepot
+  repository: host.docker.internal:5001/filedepot
   tag: latest
   pullPolicy: Always
 
@@ -16,6 +16,18 @@ kafka:
   bootstrapServers: kafka-controller-0.kafka-controller-headless.kafka.svc.cluster.local:9092
   topic: filedepot-topic
 
+resourcenv:
+  - name: ENVIRONMENT
+    value: "dev"
+  - name: PROJECT_NAME
+    value: "filedepot"
+  - name: DATABASE_URL
+    value: "sqlite:///./test.db"
+  - name: FIRST_SUPERUSER
+    value: "admin@example.com"
+  - name: FIRST_SUPERUSER_PASSWORD
+    value: "admin123"
+
 resources:
   limits:
     cpu: 500m
@@ -26,6 +38,8 @@ resources:
 
 persistence:
   enabled: true
+  storageClass: "standard"
+  accessMode: ReadWriteOnce
   size: 1Gi
 
 readinessProbe:

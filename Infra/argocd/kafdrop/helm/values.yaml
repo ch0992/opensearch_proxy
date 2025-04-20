@@ -7,7 +7,7 @@ image:
 
 service:
   type: LoadBalancer
-  port: 9000
+  port: 9010
   annotations:
     metallb.universe.tf/address-pool: first-pool
 

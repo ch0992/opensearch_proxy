@@ -5,7 +5,8 @@ metadata:
   name: {{ .Release.Name }}-pvc
 spec:
   accessModes:
-    - ReadWriteOnce
+    - {{ .Values.persistence.accessMode }}
+  storageClassName: {{ .Values.persistence.storageClass }}
   resources:
     requests:
       storage: {{ .Values.persistence.size }}

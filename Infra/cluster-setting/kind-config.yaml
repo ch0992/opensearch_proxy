@@ -1,17 +1,33 @@
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
-name: desktop
+name: filedepot
 nodes:
 - role: control-plane
   extraPortMappings:
-  - containerPort: 30000  # OpenSearch HTTP
-    hostPort: 30000
-  - containerPort: 30001  # OpenSearch Transport
-    hostPort: 30001
-  - containerPort: 30002  # Kafka
-    hostPort: 30002
-  - containerPort: 30003  # Kafka Manager
-    hostPort: 30003
+  # MinIO - 콘솔 및 S3 API
+  - containerPort: 9000
+    hostPort: 9000
+    protocol: TCP
+  # OpenSearch - REST API
+  - containerPort: 9200
+    hostPort: 9200
+    protocol: TCP
+  # Kafdrop - Kafka UI
+  - containerPort: 9100
+    hostPort: 9100
+    protocol: TCP
+  # FileDepot - FastAPI 기반 서비스
+  - containerPort: 8000
+    hostPort: 8000
+    protocol: TCP
+  # Kafka Broker - 외부 접속용 PLAINTEXT 포트
+  - containerPort: 9094
+    hostPort: 9094
+    protocol: TCP
+  # Argo CD - Insecure UI 포트
+  - containerPort: 8070
+    hostPort: 8070
+    protocol: TCP
   kubeadmConfigPatches:
   - |
     kind: InitConfiguration
@@ -20,4 +36,7 @@ nodes:
         node-labels: "ingress-ready=true"
 - role: worker
 - role: worker
-
+containerdConfigPatches:
+- |-
+  [plugins."io.containerd.grpc.v1.cri".registry.mirrors."localhost:5001"]
+    endpoint = ["http://localhost:5001"]
